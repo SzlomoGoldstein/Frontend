@@ -7,6 +7,11 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+
+  imports: {
+    dirs: ['stores'],
+  },
+
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
@@ -14,6 +19,10 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    'nuxt-lodash',
+    'dayjs-nuxt'
     //...
   ],
   vite: {
@@ -22,6 +31,12 @@ export default defineNuxtConfig({
         transformAssetUrls,
       },
     },
+  },
+
+  lodash: {
+    prefix: "_",
+    prefixSkip: false,
+    upperAfterPrefix: false,
   },
 })
 

@@ -22,7 +22,7 @@ export default defineNuxtPlugin((app) => {
         },
         dark: {
           colors: {
-            'brand': colors.purple.lighten4,
+            'brand': colors.purple.darken4,
           }
         }
       }

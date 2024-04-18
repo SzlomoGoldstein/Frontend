@@ -23,6 +23,7 @@
         <NuxtPage />
       </div>
     </v-main>
+    <LoginDialog></LoginDialog>
   </v-app>
 </template>
 

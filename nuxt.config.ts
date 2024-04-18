@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
+  runtimeConfig:{
+    public:{
+      BASE_URL:'http://localhost:5123'
+    }
+  }
+
   devtools: {enabled: false},
   ssr: false,
   //...

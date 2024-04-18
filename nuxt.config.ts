@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     public:{
       BASE_URL:'http://localhost:5123'
     }
-  }
+  },
 
   devtools: {enabled: false},
   ssr: false,

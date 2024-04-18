@@ -30,12 +30,14 @@
 import { useDisplay } from 'vuetify'
 import { useTheme } from 'vuetify'
 import { useStorage } from '@vueuse/core'
+import { useUserStore } from '~/stores/user';
 
 
 const theme = useTheme()
 const { mobile } = useDisplay();
 const drawer = ref(null)
 const currentTheme = useStorage('currentTheme', 'light')
+const userStore = useUserStore();
 const menuItems = [
   {
     name: 'Strona główna',
@@ -57,6 +59,7 @@ function toggleTheme() {
 
 onMounted(() => {
   theme.global.name.value = currentTheme.value;
+  userStore.loadLoggedInUser();
 });
 
 </script>

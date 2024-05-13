@@ -27,6 +27,7 @@ const userStore = useUserStore();
 const show = computed(() => {
     return userStore.$state.isLoggedIn === false || userStore.$state.loading === true;
 });
+const { getErrorMessage } = useWebApiResponseParser();
 
 const errorMsg = ref("");
 const loading = ref(false);
@@ -48,7 +49,7 @@ const login = () => {
         method: 'POST',
         body: { ...viewModel.value },
         onResponseError: ({response}) => {
-            errorMsg.value = "Błąd logowania";
+            errorMsg.value = getErrorMessage(response, {"InvalidLoginOrPassword": "Błędny login lub hasło"});
         }
     })
     .then((response) => {

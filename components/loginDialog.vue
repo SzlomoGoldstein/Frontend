@@ -5,14 +5,15 @@
             <div v-if="userStore.$state.loading === true" class="pa-4 d-flex justify-center">
                 <VProgressCircular indeterminate></VProgressCircular>
             </div>
-            <VForm v-else @submit.prevent="submit">
+            <VForm v-else @submit.prevent="login" :disabled="loading">
                 <VCardText>
                     <v-text-field class="mb4" variant="outlined" v-model="viewModel.email" label="Email"></v-text-field>
                     <v-text-field class="mb4" variant="outlined" v-model="viewModel.password" type="password"
                         label="Hasło"></v-text-field>
+                    <VAlert v-if="errorMsg" type = "error" variant = "tonal">{{ errorMsg }} </VAlert>
                 </VCardText>
                 <VCardActions>
-                    <V-btn class="mx-auto" color="primary" type="submit" variant="elevated">Zaloguj</V-btn>
+                    <V-btn class="mx-auto" color="primary" type="submit" variant="elevated" :loading="loading">Zaloguj</V-btn>
                 </VCardActions>
             </VForm>
         </VCard>

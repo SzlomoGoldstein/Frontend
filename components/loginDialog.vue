@@ -27,6 +27,9 @@ const show = computed(() => {
     return userStore.$state.isLoggedIn === false || userStore.$state.loading === true;
 });
 
+const errorMsg = ref("");
+const loading = ref(false);
+
 const viewModel = ref({
     email: '',
     password: ''
@@ -34,6 +37,27 @@ const viewModel = ref({
 
 const submit = () => {
     console.log(viewModel.value);
+}
+
+const login = () => {
+    loading.value = true;
+    errorMsg.value = "";
+
+    useWebApiFetch('/User/Login', {
+        method: 'POST',
+        body: { ...viewModel.value },
+        onResponseError: ({response}) => {
+            errorMsg.value = "Błąd logowania";
+        }
+    })
+    .then((response) => {
+        if (response.data.value) {
+            userStore.loadLoggedInUser();
+        }
+    })
+    .finally(() => {
+        loading.value = false;
+    })
 }
 
 </script>

@@ -20,7 +20,7 @@
 
     <v-main>
       <div class="pa-4">
-        <NuxtPage />
+        <NuxtPage/>
       </div>
     </v-main>
     <LoginDialog></LoginDialog>

@@ -29,7 +29,7 @@ const show = computed(() => {
 });
 
 const errorMsg = ref("");
-const loading = ref(false);
+const loading = ref();
 
 const viewModel = ref({
     email: '',

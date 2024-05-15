@@ -25,7 +25,8 @@
 
       <VList>
         <VListItem v-for="item in menuItems" :key="item.name" :title="item.name" :prepend-icon="item.icon"
-          :to="item.url"></VListItem>
+          :to="item.url">
+        </VListItem>
       </VList>
       <template v-slot:append>
         <div class="pa-2">
@@ -43,6 +44,7 @@
       </div>
     </v-main>
     <LoginDialog></LoginDialog>
+    <ConfirmDialog ref="confirmDialog" />
   </v-app>
 </template>
 
@@ -60,6 +62,7 @@ const drawer = ref(null)
 const currentTheme = useStorage('currentTheme', 'light')
 const userStore = useUserStore();
 const accountStore = useAccountStore();
+const confirmDialog = ref(null);
 
 const menuItems = [
   {
@@ -81,7 +84,16 @@ function toggleTheme() {
 }
 
 const logout = () => {
-  userStore.logout();
+  confirmDialog.value.show({
+    title: 'Potwierdź wylogowanie',
+    text: 'Czy na pewno chcesz się wylogować?',
+    confirmBtnText: 'Wyloguj',
+    confirmBtnColor: 'error'
+  }).then((confirm) => {
+    if (confirm) {
+      userStore.logout();
+    }
+  })
 }
 
 onMounted(() => {

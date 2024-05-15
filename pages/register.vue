@@ -24,10 +24,13 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useGlobalMessageStore } from '../stores/globalMessage';
 
 definePageMeta({
     layout: "no-auth",
 });
+
+var globalMessageStore = useGlobalMessageStore();
 
 const viewModel = ref({
     email: '',
@@ -60,11 +63,12 @@ const register = () => {
         method: 'POST',
         body: { ...viewModel.value },
         onResponseError: ({ response }) => {
-            errorMsg.value = getErrorMessage(response, {"AccountWithThisEmailAlreadyExist": "Konto z tym adresem email już istnieje" });
+            errorMsg.value = getErrorMessage(response, { "AccountWithThisEmailAlreadyExists": "Konto z tym adresem email już istnieje" });
         }
     })
         .then((response) => {
             if (response.data.value) {
+                globalMessageStore.showSuccessMessage('Twoje konto zostało utworzone. Zalogowano do aplikacji.');
                 router.push({ path: '/' });
             }
         })

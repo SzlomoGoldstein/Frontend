@@ -2,9 +2,16 @@ import { hash } from 'ohash'
 
 export const useWebApiFetch = function (request, opts) {
     const config = useRuntimeConfig()
-    
+    const { getErrorMessage } = useWebApiResponseParser();
+    const globalMessageStore = useGlobalMessageStore();
+    const antiForgeryStore = useAntiForgeryStore();
 
-    return useFetch(request, { baseURL: config.public.BASE_URL,
+    opts = opts || {};
+    opts.headers = opts.headers || {};
+    opts.headers['X-XSRF-TOKEN'] = antiForgeryStore.$state.token;
+
+    return useFetch(request, {
+        baseURL: config.public.BASE_URL,
         onRequest({ request, options }) {
             // Set the request headers
         },
@@ -19,6 +26,7 @@ export const useWebApiFetch = function (request, opts) {
             globalMessageStore.showErrorMessage(message);
         },
         credentials: 'include',
-        key : hash(['webapi-fetch', request, opts?.body, opts?.params, opts?.method, opts?.query]),
-        ...opts});
+        key: hash(['webapi-fetch', request, opts?.body, opts?.params, opts?.method, opts?.query]),
+        ...opts
+    });
 }

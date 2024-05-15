@@ -62,6 +62,7 @@ const drawer = ref(null)
 const currentTheme = useStorage('currentTheme', 'light')
 const userStore = useUserStore();
 const accountStore = useAccountStore();
+const antiForgeryStore = useAntiForgeryStore();
 const confirmDialog = ref(null);
 
 const menuItems = [
@@ -95,6 +96,8 @@ const logout = () => {
     }
   })
 }
+
+await antiForgeryStore.loadAntiForgeryToken();
 
 onMounted(() => {
   theme.global.name.value = currentTheme.value;
